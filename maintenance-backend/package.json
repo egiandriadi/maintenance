@@ -4,6 +4,7 @@
   "description": "Maintenance Backend using Express.js backend with GraphQL and Prisma",
   "main": "index.js",
   "scripts": {
+    "start": "node server.js",
     "dev": "nodemon src/index.ts",
     "migrate": "prisma migrate dev",
     "generate": "prisma generate",

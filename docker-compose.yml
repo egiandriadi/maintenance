@@ -1,0 +1,62 @@
+version: "3.7"
+
+services:
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: userpg
+      POSTGRES_PASSWORD: welcomehome
+      POSTGRES_DB: maintenance_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./maintenance-backend
+    container_name: maintenance-backend
+    # restart: unless-stopped
+    environment:
+      DATABASE_URL: "postgresql://userpg:welcomehome@postgres:5432/maintenance_db?schema=public"
+      CRON_SCHEDULE: "0 * * * *"
+      MTQQ_HOST_URL: "mqtt://mosquitto:1883"
+    depends_on:
+      - postgres
+    command: >
+      sh -c "npx prisma migrate deploy &&
+             npm run seed &&
+             npm run dev"
+    ports:
+      - "4000:4000"
+
+  frontend:
+    build:
+      context: ./maintenance-app
+    container_name: maintenance-app
+    # restart: unless-stopped
+    environment:
+      NEXT_PUBLIC_GRAPHQL_ENDPOINT: "http://localhost:4000/graphql"
+      NEXT_PUBLIC_WS_GRAPHQL_ENDPOINT: "ws://localhost:4000/graphql"
+      NEXT_PUBLIC_MTQQ_HOST_URL: "ws://mosquitto:9001"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+  mosquitto:
+    image: eclipse-mosquitto
+    hostname: mosquitto
+    container_name: mosquitto
+    # restart: unless-stopped
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./mosquitto:/etc/mosquitto
+      - ./mosquitto/mosquitto.conf:/mosquitto/config/mosquitto.conf
+
+volumes:
+  postgres_data:
