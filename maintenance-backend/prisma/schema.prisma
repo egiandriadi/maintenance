@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model urgency_maintenance {
+  id        Int                     @id @default(autoincrement())
+  uuid      String                  @unique @default(uuid())
+  name      String
+  icon      String?
+  color     String
+  sla_in_hours            Int?                // New column
+  next_status_maintenance_id Int?             // New column
+  created_by String
+  created_at DateTime               @default(now())
+  updated_by String?
+  updated_at DateTime               @updatedAt
+  deleted_by String?
+  deleted_at DateTime?
+
+  maintenance_requests maintenance_request[]
+}
+
+model status_maintenance {
+  id         Int                     @id @default(autoincrement())
+  uuid       String                  @unique @default(uuid())
+  name       String
+  color     String
+  created_by String
+  created_at DateTime                @default(now())
+  updated_by String?
+  updated_at DateTime                @updatedAt
+  deleted_by String?
+  deleted_at DateTime?
+
+  maintenance_requests maintenance_request[]
+}
+
+model maintenance_request {
+  id                     Int                  @id @default(autoincrement())
+  uuid                   String               @unique @default(uuid())
+  title                  String
+  description            String
+  status_maintenance_id  Int
+  urgency_maintenance_id Int
+  created_by             String
+  created_at             DateTime             @default(now())
+  updated_by             String?
+  updated_at             DateTime             @updatedAt
+  deleted_by             String?
+  deleted_at             DateTime?
+
+  status_maintenance     status_maintenance   @relation(fields: [status_maintenance_id], references: [id])
+  urgency_maintenance    urgency_maintenance  @relation(fields: [urgency_maintenance_id], references: [id])
+}

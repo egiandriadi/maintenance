@@ -1,0 +1,48 @@
+{
+  "name": "maintenance-backend",
+  "version": "1.0.0",
+  "description": "Maintenance Backend using Express.js backend with GraphQL and Prisma",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.ts",
+    "migrate": "prisma migrate dev",
+    "generate": "prisma generate",
+    "seed": "ts-node prisma/seed.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@apollo/server": "^4.11.3",
+    "@graphql-tools/schema": "^10.0.16",
+    "@prisma/client": "^6.2.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "graphql": "^16.10.0",
+    "graphql-subscriptions": "^3.0.0",
+    "graphql-tag": "^2.12.6",
+    "graphql-ws": "^6.0.1",
+    "joi": "^17.13.3",
+    "lodash.merge": "^4.6.2",
+    "node-cron": "^3.0.3",
+    "prisma": "^6.2.1",
+    "subscriptions-transport-ws": "^0.11.0",
+    "winston": "^3.17.0",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/lodash.merge": "^4.6.9",
+    "@types/node": "^22.10.5",
+    "@types/node-cron": "^3.0.11",
+    "@types/ws": "^8.5.13",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.3"
+  },
+  "resolutions": {
+    "@types/express": "^4.17.13"
+  }
+}
