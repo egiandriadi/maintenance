@@ -1,4 +1,5 @@
 import prisma from '../utils/db';
+import mqttService from '../utils/mqttService';
 
 export class MaintenanceRequestService {
   async getOpenRequestsCount() {
@@ -46,7 +47,7 @@ export class MaintenanceRequestService {
       prisma.maintenance_request.findMany({
         skip,
         take,
-        orderBy: { id: 'asc' },
+        orderBy: { created_at: 'desc' },
         include: {
           status_maintenance: true,
           urgency_maintenance: true,
@@ -69,23 +70,51 @@ export class MaintenanceRequestService {
   }
 
   async create(title: string, description: string, status_maintenance_id: number, urgency_maintenance_id: number, created_by: string) {
-    return await prisma.maintenance_request.create({
+    const newRequest = await prisma.maintenance_request.create({
       data: { title, description, status_maintenance_id, urgency_maintenance_id, created_by },
     });
+
+    // Send MQTT message after creating a new request
+    const message = JSON.stringify({
+      action: 'create',
+      request: newRequest,
+    });
+
+    mqttService.publishMessage(message);
+
+    return newRequest;
   }
 
   async update(id: number, title?: string, description?: string, status_maintenance_id?: number, urgency_maintenance_id?: number, updated_by?: string) {
-    return await prisma.maintenance_request.update({
+    const updateRequest = await prisma.maintenance_request.update({
       where: { id },
       data: { title, description, status_maintenance_id, urgency_maintenance_id, updated_by, updated_at: new Date() },
     });
+
+    const message = JSON.stringify({
+      action: 'update',
+      request: updateRequest,
+    });
+
+    mqttService.publishMessage(message);
+
+    return updateRequest;
   }
 
   async updateStatus(id: number, status_maintenance_id?: number, updated_by?: string) {
-    return await prisma.maintenance_request.update({
+    const updateRequest = await prisma.maintenance_request.update({
       where: { id },
       data: { status_maintenance_id, updated_by, updated_at: new Date() },
     });
+
+    const message = JSON.stringify({
+      action: 'update',
+      request: updateRequest,
+    });
+
+    mqttService.publishMessage(message);
+
+    return updateRequest;
   }
 
   async delete(id: number) {
