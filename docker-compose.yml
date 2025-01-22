@@ -34,8 +34,8 @@ services:
 
   frontend:
     build:
-      context: ./maintenance-app
-    container_name: maintenance-app
+      context: ./maintenance-frontend
+    container_name: maintenance-frontend
     # restart: unless-stopped
     environment:
       NEXT_PUBLIC_GRAPHQL_ENDPOINT: "http://localhost:4000/graphql"
