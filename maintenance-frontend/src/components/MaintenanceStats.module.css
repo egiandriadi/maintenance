@@ -1,0 +1,27 @@
+.statsContainer {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.statBox {
+  background-color: #FFFFFF;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 5px;
+  text-align: center;
+  width: 125px;
+  margin:10px;
+}
+
+.statBox h3 {
+  margin: 0;
+  color: #2d9f83;
+  font-size:150%;
+}
+
+.statBox p {
+  margin: 5px 0 0;
+  color: #666;
+  font-size:13px;
+}

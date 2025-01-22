@@ -1,0 +1,76 @@
+.listContainer {
+  width:100%;
+}
+
+.requestItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom:20px;
+}
+
+.requestItem:last-child {
+  border-bottom: none;
+}
+
+.requestInfo h4 {
+  font-size:14px;
+  margin: 0;
+  color: #333;
+}
+
+.urgency {
+  color: #ff6b6b;
+  font-size: 0.9em;
+  margin-top:10px;
+}
+
+.requestMeta {
+  text-align: right;
+}
+
+.requestMeta p {
+  font-size: 0.7em;
+  margin: 0;
+  color: #999;
+}
+
+.status {
+  background-color: #e0f7fa;
+  color: #FFF;
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-size: 0.7em;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  background-color: #36a388;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  margin: 0 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.pagination span {
+  margin: 0 10px;
+  font-weight: bold;
+}

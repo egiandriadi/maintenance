@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #f8f8ff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+/* styles/globals.css or specific component CSS */
+
+body,
+html {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0 auto;
+  padding: 30px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+  /* min-height: 100vh; */
+  /* Ensures the container takes at least the full viewport height */
+  width: 100%;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  position:relative;
+}
+
+@media (min-width: 768px) {
+  .container {
+    width: 70%;
+    padding: 0;
+    margin:0 auto;
+  }
+}
+
+/* styles/Home.module.css */
+
+.addButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #36a388;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  cursor: pointer;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s;
+}
+
+.addButton:hover {
+  background-color: #005bb5;
+}
+
+.plusIcon {
+  font-size: 24px;
+  line-height: 1;
+}
